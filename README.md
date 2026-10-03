@@ -121,8 +121,8 @@ am start --user <user_id> -n <package_name>/<activity_name>
 ### Build via Command Line
 ```bash
 # Clone the repository
-git clone https://github.com/udmodz0/cloner.git
-cd cloner
+git clone https://github.com/udmodz0/adb-cloner.git
+cd adb-cloner
 
 # Build Debug APK
 ./gradlew assembleDebug
@@ -155,7 +155,7 @@ Developed with ❤️ by **UDhanika Dissanayaka (UDMODZ)**
 | Channel | Link |
 | :--- | :--- |
 | 🌐 **Official Website** | [https://udmodz.site](https://udmodz.site) |
-| 📦 **Source Repository** | [github.com/udmodz0/cloner](https://github.com/udmodz0/cloner) |
+| 📦 **Source Repository** | [github.com/udmodz0/adb-cloner](https://github.com/udmodz0/adb-cloner) |
 | 💬 **WhatsApp Channel** | [Follow UDMODZ](https://whatsapp.com/channel/0029Vb5uLwF7z4kgGnpfGU3D) |
 | 📱 **WhatsApp Support** | [+94 70 463 8406](https://wa.me/94704638406) |
 | 📢 **Telegram Updates** | [@udmodz0](https://t.me/udmodz0) |

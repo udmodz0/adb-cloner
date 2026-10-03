@@ -166,7 +166,7 @@ fun DevAboutDialog(
                 // Source Code Repository
                 ContactActionRow(
                     label = "CloneSpace Source Code",
-                    value = "github.com/udmodz0/cloner",
+                    value = "github.com/udmodz0/adb-cloner",
                     icon = Icons.Rounded.Code,
                     accentColor = Color(0xFF38BDF8),
                     onClick = { DevLinks.openUrl(context, DevLinks.GITHUB_REPO) }

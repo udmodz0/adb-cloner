@@ -61,7 +61,7 @@ object DevLinks {
     const val TELEGRAM_DM = "https://t.me/udmodz"
     const val WEBSITE = "https://udmodz.site"
     const val GITHUB = "https://github.com/udmodz0"
-    const val GITHUB_REPO = "https://github.com/udmodz0/cloner"
+    const val GITHUB_REPO = "https://github.com/udmodz0/adb-cloner"
     const val YOUTUBE = "https://youtube.com/@udmodz"
     const val EMAIL = "support@udmodz.site"
 
