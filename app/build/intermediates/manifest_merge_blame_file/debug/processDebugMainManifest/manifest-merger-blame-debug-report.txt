@@ -1,0 +1,197 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.clonespace.app"
+4    android:versionCode="1"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="26"
+9        android:targetSdkVersion="35" />
+10
+11    <!-- Query all packages installed on the device (Android 11+) -->
+12    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+12-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:6:5-8:53
+12-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:7:9-61
+13
+14    <!-- Permission to install homescreen shortcuts for cloned apps -->
+15    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+15-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:11:5-88
+15-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:11:22-85
+16
+17    <permission
+17-->[androidx.core:core:1.15.0] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\a9086adcae38cd88fe18f06d941de35a\transformed\core-1.15.0\AndroidManifest.xml:22:5-24:47
+18        android:name="com.clonespace.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+18-->[androidx.core:core:1.15.0] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\a9086adcae38cd88fe18f06d941de35a\transformed\core-1.15.0\AndroidManifest.xml:23:9-81
+19        android:protectionLevel="signature" />
+19-->[androidx.core:core:1.15.0] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\a9086adcae38cd88fe18f06d941de35a\transformed\core-1.15.0\AndroidManifest.xml:24:9-44
+20
+21    <uses-permission android:name="com.clonespace.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+21-->[androidx.core:core:1.15.0] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\a9086adcae38cd88fe18f06d941de35a\transformed\core-1.15.0\AndroidManifest.xml:26:5-97
+21-->[androidx.core:core:1.15.0] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\a9086adcae38cd88fe18f06d941de35a\transformed\core-1.15.0\AndroidManifest.xml:26:22-94
+22    <uses-permission android:name="moe.shizuku.manager.permission.API_V23" />
+22-->[dev.rikka.shizuku:provider:13.1.5] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\9895aab94c59bb038f51efc5d8b68650\transformed\provider-13.1.5\AndroidManifest.xml:8:5-78
+22-->[dev.rikka.shizuku:provider:13.1.5] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\9895aab94c59bb038f51efc5d8b68650\transformed\provider-13.1.5\AndroidManifest.xml:8:22-75
+23
+24    <application
+24-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:13:5-55:19
+25        android:name="com.clonespace.app.CloneSpaceApplication"
+25-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:14:9-46
+26        android:allowBackup="true"
+26-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:15:9-35
+27        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+27-->[androidx.core:core:1.15.0] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\a9086adcae38cd88fe18f06d941de35a\transformed\core-1.15.0\AndroidManifest.xml:28:18-86
+28        android:dataExtractionRules="@null"
+28-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:16:9-44
+29        android:debuggable="true"
+30        android:extractNativeLibs="false"
+31        android:fullBackupContent="@null"
+31-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:17:9-42
+32        android:hardwareAccelerated="true"
+32-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:23:9-43
+33        android:icon="@mipmap/ic_launcher"
+33-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:18:9-43
+34        android:label="@string/app_name"
+34-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:19:9-41
+35        android:largeHeap="true"
+35-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:22:9-33
+36        android:roundIcon="@mipmap/ic_launcher"
+36-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:20:9-48
+37        android:supportsRtl="true"
+37-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:21:9-35
+38        android:theme="@style/Theme.CloneSpace" >
+38-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:24:9-48
+39
+40        <!-- Shizuku Provider Configuration -->
+41        <provider
+42            android:name="rikka.shizuku.ShizukuProvider"
+42-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:28:13-57
+43            android:authorities="com.clonespace.app.shizuku"
+43-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:29:13-59
+44            android:enabled="true"
+44-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:30:13-35
+45            android:exported="true"
+45-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:31:13-36
+46            android:multiprocess="false"
+46-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:32:13-41
+47            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
+47-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:33:13-79
+48
+49        <!-- Main Compose Activity -->
+50        <activity
+50-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:36:9-45:20
+51            android:name="com.clonespace.app.MainActivity"
+51-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:37:13-41
+52            android:exported="true"
+52-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:38:13-36
+53            android:theme="@style/Theme.CloneSpace"
+53-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:40:13-52
+54            android:windowSoftInputMode="adjustResize" >
+54-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:39:13-55
+55            <intent-filter>
+55-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:41:13-44:29
+56                <action android:name="android.intent.action.MAIN" />
+56-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:42:17-69
+56-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:42:25-66
+57
+58                <category android:name="android.intent.category.LAUNCHER" />
+58-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:43:17-77
+58-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:43:27-74
+59            </intent-filter>
+60        </activity>
+61
+62        <!-- Shortcut Launch Proxy Activity -->
+63        <activity
+63-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:48:9-53:39
+64            android:name="com.clonespace.app.CloneLaunchActivity"
+64-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:49:13-48
+65            android:excludeFromRecents="true"
+65-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:51:13-46
+66            android:exported="true"
+66-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:53:13-36
+67            android:noHistory="true"
+67-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:52:13-37
+68            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+68-->D:\Download\adb cloner\app\src\main\AndroidManifest.xml:50:13-72
+69
+70        <provider
+70-->[androidx.emoji2:emoji2:1.3.0] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\bf941613131ad38aa88a3978f22592f0\transformed\emoji2-1.3.0\AndroidManifest.xml:24:9-32:20
+71            android:name="androidx.startup.InitializationProvider"
+71-->[androidx.emoji2:emoji2:1.3.0] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\bf941613131ad38aa88a3978f22592f0\transformed\emoji2-1.3.0\AndroidManifest.xml:25:13-67
+72            android:authorities="com.clonespace.app.androidx-startup"
+72-->[androidx.emoji2:emoji2:1.3.0] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\bf941613131ad38aa88a3978f22592f0\transformed\emoji2-1.3.0\AndroidManifest.xml:26:13-68
+73            android:exported="false" >
+73-->[androidx.emoji2:emoji2:1.3.0] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\bf941613131ad38aa88a3978f22592f0\transformed\emoji2-1.3.0\AndroidManifest.xml:27:13-37
+74            <meta-data
+74-->[androidx.emoji2:emoji2:1.3.0] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\bf941613131ad38aa88a3978f22592f0\transformed\emoji2-1.3.0\AndroidManifest.xml:29:13-31:52
+75                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+75-->[androidx.emoji2:emoji2:1.3.0] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\bf941613131ad38aa88a3978f22592f0\transformed\emoji2-1.3.0\AndroidManifest.xml:30:17-75
+76                android:value="androidx.startup" />
+76-->[androidx.emoji2:emoji2:1.3.0] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\bf941613131ad38aa88a3978f22592f0\transformed\emoji2-1.3.0\AndroidManifest.xml:31:17-49
+77            <meta-data
+77-->[androidx.lifecycle:lifecycle-process:2.8.7] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\33d0263b579477ab18a910a89926cd63\transformed\lifecycle-process-2.8.7\AndroidManifest.xml:29:13-31:52
+78                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+78-->[androidx.lifecycle:lifecycle-process:2.8.7] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\33d0263b579477ab18a910a89926cd63\transformed\lifecycle-process-2.8.7\AndroidManifest.xml:30:17-78
+79                android:value="androidx.startup" />
+79-->[androidx.lifecycle:lifecycle-process:2.8.7] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\33d0263b579477ab18a910a89926cd63\transformed\lifecycle-process-2.8.7\AndroidManifest.xml:31:17-49
+80            <meta-data
+80-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\bb5a59cb598ca15672c40c1a02e10556\transformed\profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
+81                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+81-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\bb5a59cb598ca15672c40c1a02e10556\transformed\profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
+82                android:value="androidx.startup" />
+82-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\bb5a59cb598ca15672c40c1a02e10556\transformed\profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
+83        </provider>
+84
+85        <activity
+85-->[androidx.compose.ui:ui-tooling-android:1.7.5] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\5027fda86f4af552f23f528d37c82618\transformed\ui-tooling-release\AndroidManifest.xml:23:9-25:39
+86            android:name="androidx.compose.ui.tooling.PreviewActivity"
+86-->[androidx.compose.ui:ui-tooling-android:1.7.5] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\5027fda86f4af552f23f528d37c82618\transformed\ui-tooling-release\AndroidManifest.xml:24:13-71
+87            android:exported="true" />
+87-->[androidx.compose.ui:ui-tooling-android:1.7.5] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\5027fda86f4af552f23f528d37c82618\transformed\ui-tooling-release\AndroidManifest.xml:25:13-36
+88
+89        <meta-data
+89-->[dev.rikka.shizuku:provider:13.1.5] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\9895aab94c59bb038f51efc5d8b68650\transformed\provider-13.1.5\AndroidManifest.xml:11:9-13:36
+90            android:name="moe.shizuku.client.V3_SUPPORT"
+90-->[dev.rikka.shizuku:provider:13.1.5] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\9895aab94c59bb038f51efc5d8b68650\transformed\provider-13.1.5\AndroidManifest.xml:12:13-57
+91            android:value="true" />
+91-->[dev.rikka.shizuku:provider:13.1.5] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\9895aab94c59bb038f51efc5d8b68650\transformed\provider-13.1.5\AndroidManifest.xml:13:13-33
+92
+93        <receiver
+93-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\bb5a59cb598ca15672c40c1a02e10556\transformed\profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
+94            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+94-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\bb5a59cb598ca15672c40c1a02e10556\transformed\profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
+95            android:directBootAware="false"
+95-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\bb5a59cb598ca15672c40c1a02e10556\transformed\profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
+96            android:enabled="true"
+96-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\bb5a59cb598ca15672c40c1a02e10556\transformed\profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
+97            android:exported="true"
+97-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\bb5a59cb598ca15672c40c1a02e10556\transformed\profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
+98            android:permission="android.permission.DUMP" >
+98-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\bb5a59cb598ca15672c40c1a02e10556\transformed\profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
+99            <intent-filter>
+99-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\bb5a59cb598ca15672c40c1a02e10556\transformed\profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
+100                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+100-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\bb5a59cb598ca15672c40c1a02e10556\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
+100-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\bb5a59cb598ca15672c40c1a02e10556\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
+101            </intent-filter>
+102            <intent-filter>
+102-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\bb5a59cb598ca15672c40c1a02e10556\transformed\profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
+103                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+103-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\bb5a59cb598ca15672c40c1a02e10556\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
+103-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\bb5a59cb598ca15672c40c1a02e10556\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
+104            </intent-filter>
+105            <intent-filter>
+105-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\bb5a59cb598ca15672c40c1a02e10556\transformed\profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
+106                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+106-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\bb5a59cb598ca15672c40c1a02e10556\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
+106-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\bb5a59cb598ca15672c40c1a02e10556\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
+107            </intent-filter>
+108            <intent-filter>
+108-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\bb5a59cb598ca15672c40c1a02e10556\transformed\profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
+109                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+109-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\bb5a59cb598ca15672c40c1a02e10556\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
+109-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\UDhanika Dissanayaka\.gradle\caches\8.10.2\transforms\bb5a59cb598ca15672c40c1a02e10556\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
+110            </intent-filter>
+111        </receiver>
+112    </application>
+113
+114</manifest>

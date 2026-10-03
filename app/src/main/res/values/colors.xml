@@ -1,0 +1,9 @@
+<resources>
+    <color name="primary">#6750A4</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="primary_container">#EADDFF</color>
+    <color name="on_primary_container">#21005D</color>
+    <color name="secondary">#625B71</color>
+    <color name="background">#1C1B1F</color>
+    <color name="surface">#1C1B1F</color>
+</resources>
