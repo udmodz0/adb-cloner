@@ -25,6 +25,15 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/udmodz0/adb-cloner/releases/latest">
+    <img src="https://img.shields.io/github/v/release/udmodz0/adb-cloner?color=00F2FF&label=Latest%20Release&style=for-the-badge&logo=github" alt="Latest Release" />
+  </a>
+  <a href="https://github.com/udmodz0/adb-cloner/releases/download/v1.0.0/CloneSpace-v1.0.0.apk">
+    <img src="https://img.shields.io/badge/Download-APK%20(v1.0.0)-success?style=for-the-badge&logo=android&logoColor=white" alt="Download APK" />
+  </a>
+</p>
+
+<p align="center">
   <img src="https://img.shields.io/badge/Kotlin-2.0.21-7F52FF?logo=kotlin&logoColor=white&style=flat-square" alt="Kotlin" />
   <img src="https://img.shields.io/badge/Jetpack%20Compose-2024.11.00-4285F4?logo=jetpackcompose&logoColor=white&style=flat-square" alt="Compose" />
   <img src="https://img.shields.io/badge/Material%203-Ready-FF7043?style=flat-square" alt="Material 3" />
