@@ -162,7 +162,6 @@ Developed with ❤️ by **UDhanika Dissanayaka (UDMODZ)**
 | 💬 **Telegram Contact** | [@udmodz](https://t.me/udmodz) |
 | 💻 **GitHub Profile** | [github.com/udmodz0](https://github.com/udmodz0) |
 | 📺 **YouTube** | [@udmodz](https://youtube.com/@udmodz) |
-| ✉️ **Support Email** | `support@udmodz.site` |
 
 </div>
 
