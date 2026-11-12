@@ -8,6 +8,7 @@ import com.clonespace.app.data.shizuku.ShizukuManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class CloneLaunchActivity : Activity() {
@@ -42,6 +43,49 @@ class CloneLaunchActivity : Activity() {
                 return@launch
             }
 
+            if (targetUserId != 0) {
+                var state = ShellCommander.execute("am get-started-user-state $targetUserId")
+                    .getOrNull()
+                    ?.trim()
+                    .orEmpty()
+
+                if (!state.contains("RUNNING_", ignoreCase = true)) {
+                    ShellCommander.execute("am start-user $targetUserId")
+                    state = ShellCommander.execute("am get-started-user-state $targetUserId")
+                        .getOrNull()
+                        ?.trim()
+                        .orEmpty()
+                }
+
+                if (!state.contains("RUNNING_UNLOCKED", ignoreCase = true)) {
+                    ShellCommander.execute(
+                        "am start --user $targetUserId -a android.app.action.CONFIRM_DEVICE_CREDENTIAL"
+                    )
+                    var unlocked = false
+                    repeat(60) {
+                        delay(400)
+                        val pollState = ShellCommander.execute("am get-started-user-state $targetUserId")
+                            .getOrNull()
+                            ?.trim()
+                            .orEmpty()
+                        if (pollState.contains("RUNNING_UNLOCKED", ignoreCase = true)) {
+                            unlocked = true
+                            return@repeat
+                        }
+                    }
+
+                    if (!unlocked) {
+                        Toast.makeText(
+                            this@CloneLaunchActivity,
+                            "Workspace (UID $targetUserId) remains locked; launch aborted to prevent fallback to User 0",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        finish()
+                        return@launch
+                    }
+                }
+            }
+
             val resolveCmd = "cmd package resolve-activity --brief --user $targetUserId $packageName"
             val resolveResult = ShellCommander.execute(resolveCmd)
             val activity = resolveResult.getOrNull()
@@ -52,7 +96,7 @@ class CloneLaunchActivity : Activity() {
             val launchCmd = if (!activity.isNullOrBlank()) {
                 "am start --user $targetUserId -n $activity"
             } else {
-                "monkey -p $packageName -c android.intent.category.LAUNCHER 1"
+                "am start --user $targetUserId -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -p $packageName"
             }
             val result = ShellCommander.execute(launchCmd)
 

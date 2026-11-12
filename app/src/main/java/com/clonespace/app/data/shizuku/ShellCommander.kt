@@ -143,7 +143,7 @@ object ShellCommander {
                 "Permission Denied by OEM: On Xiaomi (MIUI/HyperOS), please go to Developer Options and enable 'Install via USB' and 'USB Debugging (Security settings)'."
             }
             combined.contains("max_users") || combined.contains("maximum user limit is reached") || combined.contains("cannot add user") || combined.contains("cannot create more users") || combined.contains("user_creation_failed") -> {
-                "Maximum user limit reached for Standard Secondary Profiles. Please choose 'Work / Managed Profile' instead, which uses an independent quota and works on this device."
+                "Maximum user limit reached for this profile type (Android allows 1 Clone Profile and 1 Managed Work Profile per parent user by default). Remove an existing profile of this type or choose another profile type."
             }
             combined.contains("not found") -> {
                 "Command binary or package target not found (exit $exitCode)."

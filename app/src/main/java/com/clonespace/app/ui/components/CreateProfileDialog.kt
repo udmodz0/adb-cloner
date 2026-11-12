@@ -2,7 +2,6 @@ package com.clonespace.app.ui.components
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,9 +10,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Business
+import androidx.compose.material.icons.rounded.ContentCopy
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -35,14 +37,15 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.clonespace.app.data.model.ProfileType
 
 @Composable
 fun CreateProfileDialog(
     onDismiss: () -> Unit,
-    onCreate: (name: String, isManaged: Boolean) -> Unit
+    onCreate: (name: String, profileType: ProfileType) -> Unit
 ) {
     var profileName by remember { mutableStateOf("") }
-    var isManagedProfile by remember { mutableStateOf(true) }
+    var selectedProfileType by remember { mutableStateOf(ProfileType.CLONE) }
     var isError by remember { mutableStateOf(false) }
 
     AlertDialog(
@@ -55,7 +58,11 @@ fun CreateProfileDialog(
             )
         },
         text = {
-            Column(modifier = Modifier.fillMaxWidth()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState())
+            ) {
                 Text(
                     text = "Configure your isolated Android user profile sandbox. Cloned apps in this profile run in a separate UID and container.",
                     style = MaterialTheme.typography.bodyMedium,
@@ -71,7 +78,7 @@ fun CreateProfileDialog(
                         if (it.isNotBlank()) isError = false
                     },
                     label = { Text("Profile Name") },
-                    placeholder = { Text("e.g., WorkSpace, Finance, SandBox") },
+                    placeholder = { Text("e.g., CloneSpace, WorkSpace, Finance") },
                     singleLine = true,
                     isError = isError,
                     supportingText = if (isError) {
@@ -90,26 +97,38 @@ fun CreateProfileDialog(
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // Option 1: Managed / Work Profile
+                // Option 1: Clone Profile (Android 14-17+)
                 ModeSelectionItem(
-                    title = "Work / Managed Profile",
-                    description = "Shares notifications with User 0, shows badge icon. Best for dual messengers and work apps.",
-                    commandPreview = "pm create-user --profileOf 0 --managed",
-                    isSelected = isManagedProfile,
-                    icon = Icons.Rounded.Business,
-                    onClick = { isManagedProfile = true }
+                    title = "Clone Profile (Recommended)",
+                    description = "Native Android clone profile attached to User 0. Launches cloned apps directly in User 0's foreground session (required on Android 17+).",
+                    commandPreview = "pm create-user --profileOf 0 --user-type android.os.usertype.profile.CLONE",
+                    isSelected = selectedProfileType == ProfileType.CLONE,
+                    icon = Icons.Rounded.ContentCopy,
+                    onClick = { selectedProfileType = ProfileType.CLONE }
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // Option 2: Standard Secondary Profile
+                // Option 2: Managed / Work Profile
+                ModeSelectionItem(
+                    title = "Work / Managed Profile",
+                    description = "Shares notifications with User 0, shows badge icon. Best for dual messengers and work apps.",
+                    commandPreview = "pm create-user --profileOf 0 --managed",
+                    isSelected = selectedProfileType == ProfileType.MANAGED_WORK,
+                    icon = Icons.Rounded.Business,
+                    onClick = { selectedProfileType = ProfileType.MANAGED_WORK }
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Option 3: Standard Secondary Profile
                 ModeSelectionItem(
                     title = "Standard Secondary User",
                     description = "Completely distinct user environment with isolated storage. Cloned apps are launched via CloneSpace or shortcuts.",
                     commandPreview = "pm create-user",
-                    isSelected = !isManagedProfile,
+                    isSelected = selectedProfileType == ProfileType.SECONDARY,
                     icon = Icons.Rounded.Person,
-                    onClick = { isManagedProfile = false }
+                    onClick = { selectedProfileType = ProfileType.SECONDARY }
                 )
             }
         },
@@ -119,7 +138,7 @@ fun CreateProfileDialog(
                     if (profileName.trim().isEmpty()) {
                         isError = true
                     } else {
-                        onCreate(profileName.trim(), isManagedProfile)
+                        onCreate(profileName.trim(), selectedProfileType)
                     }
                 }
             ) {

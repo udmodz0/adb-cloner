@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.clonespace.app.data.model.AppCloneItem
 import com.clonespace.app.data.model.CommandLog
+import com.clonespace.app.data.model.ProfileType
 import com.clonespace.app.data.model.ShizukuState
 import com.clonespace.app.data.model.UserProfile
 import com.clonespace.app.data.repository.AppRepositoryImpl
@@ -180,12 +181,12 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun createWorkspace(context: Context, name: String, isManaged: Boolean) {
+    fun createWorkspace(context: Context, name: String, profileType: ProfileType) {
         viewModelScope.launch {
             _isLoading.value = true
-            createProfileUseCase(name, isManaged)
+            createProfileUseCase(name, profileType)
                 .onSuccess {
-                    _snackbarMessage.value = "Workspace '${it.name}' created and started (UID ${it.id})"
+                    _snackbarMessage.value = "Workspace '${it.name}' (${it.type.badge}) created and started (UID ${it.id})"
                     refreshApps(context)
                 }
                 .onFailure {
@@ -195,11 +196,12 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun startProfile(userId: Int) {
+    fun startProfile(context: Context, userId: Int) {
         viewModelScope.launch {
             manageProfileStateUseCase.start(userId)
                 .onSuccess {
-                    _snackbarMessage.value = "Workspace (UID $userId) started."
+                    _snackbarMessage.value = "Workspace (UID $userId) started and unlocked."
+                    refreshApps(context)
                 }
                 .onFailure {
                     _snackbarMessage.value = "Error starting profile: ${it.message}"
@@ -290,6 +292,7 @@ class MainViewModel : ViewModel() {
         viewModelScope.launch {
             launchClonedAppUseCase(targetUserId, packageName)
                 .onSuccess {
+                    getProfilesUseCase()
                     _snackbarMessage.value = "Launched $packageName in User $targetUserId"
                 }
                 .onFailure {

@@ -2,7 +2,9 @@ package com.clonespace.app.data.model
 
 enum class ProfileType(val displayName: String, val badge: String) {
     OWNER_SYSTEM("System Owner (Main)", "Owner"),
+    CLONE("Clone Profile", "Clone"),
     MANAGED_WORK("Managed / Work Profile", "Work"),
+    PRIVATE("Private Space", "Private"),
     OEM_CLONE("Dual App / OEM Clone", "Clone"),
     SECONDARY("Secondary User", "Secondary"),
     GUEST("Guest Profile", "Guest")
@@ -14,7 +16,9 @@ data class UserProfile(
     val flags: Int,
     val type: ProfileType,
     val isRunning: Boolean,
-    val isCurrent: Boolean = false
+    val isCurrent: Boolean = false,
+    val isUnlocked: Boolean = true,
+    val userType: String? = null
 ) {
     val isOwner: Boolean get() = id == 0
 
@@ -36,12 +40,48 @@ data class UserProfile(
         // Common OEM clone flags/IDs (e.g., Xiaomi Dual Apps uses 999)
         private const val OEM_DUAL_APP_USER_ID = 999
 
-        fun resolveType(id: Int, name: String, flags: Int): ProfileType {
+        const val USER_TYPE_PROFILE_CLONE = "android.os.usertype.profile.CLONE"
+        const val USER_TYPE_PROFILE_MANAGED = "android.os.usertype.profile.MANAGED"
+        const val USER_TYPE_PROFILE_PRIVATE = "android.os.usertype.profile.PRIVATE"
+
+        fun resolveType(
+            id: Int,
+            name: String,
+            flags: Int,
+            userType: String? = null
+        ): ProfileType {
             if (id == 0) return ProfileType.OWNER_SYSTEM
-            if (id == OEM_DUAL_APP_USER_ID || name.contains("clone", ignoreCase = true) || name.contains("dual", ignoreCase = true)) {
+
+            if (!userType.isNullOrBlank()) {
+                when {
+                    userType.equals(USER_TYPE_PROFILE_CLONE, ignoreCase = true) ||
+                        userType.endsWith(".CLONE", ignoreCase = true) -> return ProfileType.CLONE
+                    userType.equals(USER_TYPE_PROFILE_MANAGED, ignoreCase = true) ||
+                        userType.endsWith(".MANAGED", ignoreCase = true) -> return ProfileType.MANAGED_WORK
+                    userType.equals(USER_TYPE_PROFILE_PRIVATE, ignoreCase = true) ||
+                        userType.endsWith(".PRIVATE", ignoreCase = true) -> return ProfileType.PRIVATE
+                    userType.endsWith(".GUEST", ignoreCase = true) -> return ProfileType.GUEST
+                    userType.endsWith(".SECONDARY", ignoreCase = true) -> return ProfileType.SECONDARY
+                }
+            }
+
+            if (id == OEM_DUAL_APP_USER_ID) {
                 return ProfileType.OEM_CLONE
             }
-            if ((flags and FLAG_MANAGED_PROFILE) != 0 || name.contains("work", ignoreCase = true)) {
+            if ((flags and FLAG_MANAGED_PROFILE) != 0) {
+                return ProfileType.MANAGED_WORK
+            }
+            if ((flags and FLAG_PROFILE) != 0) {
+                return if (name.contains("private", ignoreCase = true)) {
+                    ProfileType.PRIVATE
+                } else {
+                    ProfileType.CLONE
+                }
+            }
+            if (name.contains("clone", ignoreCase = true) || name.contains("dual", ignoreCase = true)) {
+                return ProfileType.CLONE
+            }
+            if (name.contains("work", ignoreCase = true)) {
                 return ProfileType.MANAGED_WORK
             }
             if ((flags and FLAG_GUEST) != 0 || name.contains("guest", ignoreCase = true)) {
