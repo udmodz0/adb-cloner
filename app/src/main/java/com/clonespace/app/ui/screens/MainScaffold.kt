@@ -179,7 +179,7 @@ fun MainScaffold(
 
                 1 -> ProfilesScreen(
                     profiles = profiles,
-                    onStartProfile = { viewModel.startProfile(it) },
+                    onStartProfile = { viewModel.startProfile(context, it) },
                     onStopProfile = { viewModel.stopProfile(it) },
                     onDeleteProfile = { viewModel.deleteProfile(context, it) },
                     onViewProfileApps = { uid ->
@@ -226,9 +226,9 @@ fun MainScaffold(
     if (showCreateProfileDialog) {
         CreateProfileDialog(
             onDismiss = { showCreateProfileDialog = false },
-            onCreate = { name, isManaged ->
+            onCreate = { name, profileType ->
                 showCreateProfileDialog = false
-                viewModel.createWorkspace(context, name, isManaged)
+                viewModel.createWorkspace(context, name, profileType)
             }
         )
     }

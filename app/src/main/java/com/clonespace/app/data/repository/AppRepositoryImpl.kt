@@ -16,6 +16,7 @@ import com.clonespace.app.data.model.AppCloneItem
 import com.clonespace.app.data.model.UserProfile
 import com.clonespace.app.data.shizuku.ShellCommander
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -176,6 +177,13 @@ class AppRepositoryImpl : AppRepository {
         targetUserId: Int,
         packageName: String
     ): Result<Unit> {
+        if (targetUserId != 0) {
+            val unlockResult = ensureUserStartedAndUnlocked(targetUserId)
+            if (unlockResult.isFailure) {
+                return unlockResult
+            }
+        }
+
         // Resolve default launcher activity for target user
         val resolveCmd = "cmd package resolve-activity --brief --user $targetUserId $packageName"
         val resolveResult = ShellCommander.execute(resolveCmd)
@@ -187,10 +195,62 @@ class AppRepositoryImpl : AppRepository {
         val launchCmd = if (!activity.isNullOrBlank()) {
             "am start --user $targetUserId -n $activity"
         } else {
-            "monkey -p $packageName -c android.intent.category.LAUNCHER 1"
+            "am start --user $targetUserId -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -p $packageName"
         }
         val result = ShellCommander.execute(launchCmd)
         return result.mapCatching { Unit }
+    }
+
+    private suspend fun ensureUserStartedAndUnlocked(targetUserId: Int): Result<Unit> {
+        var state = ShellCommander.execute("am get-started-user-state $targetUserId")
+            .getOrNull()
+            ?.trim()
+            .orEmpty()
+
+        // 1. If profile is stopped/frozen, start it first
+        if (!state.contains("RUNNING_", ignoreCase = true)) {
+            val startResult = ShellCommander.execute("am start-user $targetUserId")
+            if (startResult.isFailure) {
+                return startResult.map { Unit }
+            }
+            state = ShellCommander.execute("am get-started-user-state $targetUserId")
+                .getOrNull()
+                ?.trim()
+                .orEmpty()
+        }
+
+        // 2. If profile credential storage is locked, confirm device credential and wait until unlocked
+        if (!state.contains("RUNNING_UNLOCKED", ignoreCase = true)) {
+            val confirmResult = ShellCommander.execute(
+                "am start --user $targetUserId -a android.app.action.CONFIRM_DEVICE_CREDENTIAL"
+            )
+            if (confirmResult.isFailure) {
+                return confirmResult.map { Unit }
+            }
+
+            var unlocked = false
+            repeat(60) {
+                delay(400)
+                val pollState = ShellCommander.execute("am get-started-user-state $targetUserId")
+                    .getOrNull()
+                    ?.trim()
+                    .orEmpty()
+                if (pollState.contains("RUNNING_UNLOCKED", ignoreCase = true)) {
+                    unlocked = true
+                    return@repeat
+                }
+            }
+
+            if (!unlocked) {
+                return Result.failure(
+                    IllegalStateException(
+                        "Workspace (UID $targetUserId) is still locked. Confirm device credentials before launching to prevent fallback to User 0."
+                    )
+                )
+            }
+        }
+
+        return Result.success(Unit)
     }
 
     override fun createHomeScreenShortcut(

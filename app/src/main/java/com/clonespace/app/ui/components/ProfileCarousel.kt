@@ -86,7 +86,7 @@ fun ProfileCarousel(
             items(profiles, key = { it.id }) { profile ->
                 val icon = when (profile.type) {
                     ProfileType.MANAGED_WORK -> Icons.Rounded.Business
-                    ProfileType.OEM_CLONE -> Icons.Rounded.ContentCopy
+                    ProfileType.CLONE, ProfileType.OEM_CLONE -> Icons.Rounded.ContentCopy
                     else -> Icons.Rounded.AccountCircle
                 }
                 ProfileChipItem(

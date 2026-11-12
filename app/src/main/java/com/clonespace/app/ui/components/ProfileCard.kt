@@ -65,14 +65,16 @@ fun ProfileCard(
 
     val icon = when (profile.type) {
         ProfileType.MANAGED_WORK -> Icons.Rounded.Business
-        ProfileType.OEM_CLONE -> Icons.Rounded.ContentCopy
+        ProfileType.CLONE, ProfileType.OEM_CLONE -> Icons.Rounded.ContentCopy
+        ProfileType.PRIVATE -> Icons.Rounded.Lock
         else -> Icons.Rounded.AccountCircle
     }
 
     val typeColor = when (profile.type) {
         ProfileType.OWNER_SYSTEM -> MaterialTheme.colorScheme.primary
         ProfileType.MANAGED_WORK -> Color(0xFF0284C7)
-        ProfileType.OEM_CLONE -> Color(0xFF8B5CF6)
+        ProfileType.CLONE, ProfileType.OEM_CLONE -> Color(0xFF8B5CF6)
+        ProfileType.PRIVATE -> Color(0xFFEC4899)
         ProfileType.SECONDARY -> Color(0xFF10B981)
         ProfileType.GUEST -> WarningAmber
     }
@@ -150,12 +152,22 @@ fun ProfileCard(
                 }
 
                 // Running state badge
+                val badgeColor = when {
+                    !profile.isRunning -> Color.Gray
+                    !profile.isUnlocked -> WarningAmber
+                    else -> SuccessGreen
+                }
+                val badgeLabel = when {
+                    !profile.isRunning -> "Stopped"
+                    !profile.isUnlocked -> "Locked"
+                    else -> "Running"
+                }
                 Surface(
                     shape = RoundedCornerShape(12.dp),
-                    color = if (profile.isRunning) SuccessGreen.copy(alpha = 0.15f) else Color.Gray.copy(alpha = 0.15f),
+                    color = badgeColor.copy(alpha = 0.15f),
                     border = androidx.compose.foundation.BorderStroke(
                         1.dp,
-                        if (profile.isRunning) SuccessGreen.copy(alpha = 0.4f) else Color.Gray.copy(alpha = 0.3f)
+                        badgeColor.copy(alpha = 0.4f)
                     )
                 ) {
                     Row(
@@ -166,14 +178,14 @@ fun ProfileCard(
                             modifier = Modifier
                                 .size(6.dp)
                                 .clip(CircleShape)
-                                .background(if (profile.isRunning) SuccessGreen else Color.Gray)
+                                .background(badgeColor)
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
-                            text = if (profile.isRunning) "Running" else "Stopped",
+                            text = badgeLabel,
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Medium,
-                            color = if (profile.isRunning) SuccessGreen else Color.Gray
+                            color = badgeColor
                         )
                     }
                 }
@@ -188,6 +200,22 @@ fun ProfileCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 if (profile.isRunning) {
+                    if (!profile.isUnlocked && !profile.isOwner) {
+                        Button(
+                            onClick = { onStart(profile.id) },
+                            shape = RoundedCornerShape(10.dp),
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Rounded.Lock,
+                                contentDescription = null,
+                                modifier = Modifier.size(16.dp)
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text("Unlock", fontSize = 12.sp)
+                        }
+                    }
+
                     FilledTonalButton(
                         onClick = { onStop(profile.id) },
                         enabled = !profile.isOwner,
